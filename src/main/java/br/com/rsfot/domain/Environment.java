@@ -6,7 +6,7 @@ import br.com.rsfot.util.InitializeFeelingsMatrix;
 import java.util.*;
 
 public class Environment {
-    private String[][] world;
+    private String[][] cave;
     private int dimension;
     private Map<String, Set<EnvironmentFeelings>> feelingsByCoordinate;
 
@@ -15,12 +15,12 @@ public class Environment {
             throw new IllegalArgumentException("Dimension must be at least 4");
         }
         this.dimension = dimension;
-        this.world = InitializeElementsMatrix.setup(dimension);
-        this.feelingsByCoordinate = InitializeFeelingsMatrix.setup(world);
+        this.cave = InitializeElementsMatrix.setup(dimension);
+        this.feelingsByCoordinate = InitializeFeelingsMatrix.setup(cave);
     }
 
-    public String[][] getWorld() {
-        return world;
+    public String[][] getCave() {
+        return cave;
     }
 
     public int getDimension() {
@@ -29,15 +29,5 @@ public class Environment {
 
     public Map<String, Set<EnvironmentFeelings>> getFeelingsByCoordinate() {
         return Collections.unmodifiableMap(feelingsByCoordinate);
-    }
-
-    private void showBoard(String[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            System.out.print("|");
-            for (int j = 0; j < board.length; j++) {
-                System.out.print(board[i][j] + "|");
-            }
-            System.out.println();
-        }
     }
 }
