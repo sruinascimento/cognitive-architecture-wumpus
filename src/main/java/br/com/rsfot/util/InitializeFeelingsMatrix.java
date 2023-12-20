@@ -10,6 +10,10 @@ import static br.com.rsfot.domain.EnvironmentObject.*;
 public class InitializeFeelingsMatrix {
     private static Map<String, Set<EnvironmentFeelings>> feelingsByCoordinate = new LinkedHashMap<>();
 
+    private void InitializeElementsMatrix() {
+        throw new UnsupportedOperationException("Object cannot be instancied!");
+    }
+
     public static Map<String, Set<EnvironmentFeelings>> setup(String[][] environmentMatrix) {
         int dimension = environmentMatrix.length;
         for (int i = 0; i < dimension; i++) {

@@ -10,6 +10,11 @@ import static br.com.rsfot.domain.EnvironmentObject.PIT;
 public class InitializeElementsMatrix {
     private static Random random = new Random();
     private static String[][] environmentMatrix;
+
+    private void InitializeFeelingsMatrix() {
+        throw new UnsupportedOperationException("Object can't be instancied");
+    }
+
     public static String[][] setup(int dimension) {
         environmentMatrix = new String[dimension][dimension];
         fillBoardsWithBlankSpaces();
