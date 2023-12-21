@@ -19,106 +19,45 @@ class AgentTest {
     }
 
     @Test
-    @DisplayName("Agent should increase x when direction is east")
-    void moveTo__should_increase_x_when_direction_is_east() {
-        agent.moveTo(EAST);
-        assertThat(agent.getCoordinateY()).isEqualTo(0);
+    @DisplayName("Agent should move forward to same face east direction when facing direction is east")
+    void moveForward__agent_should_move_forward_to_same_face_direction_east() {
+        agent.setFacingDirection(EAST);
+        agent.moveForward();
+        assertThat(agent.getCoordinateY()).isZero();
         assertThat(agent.getCoordinateX()).isEqualTo(1);
-
     }
 
     @Test
-    @DisplayName("Agent should decrease x when direction is west")
-    void moveTo__should_decrease_x_when_direction_is_west() {
+    @DisplayName("Agent should move forward to same face direction when facing direction is west")
+    void moveForward__agent_should_move_forward_to_same_face_direction() {
         agent.setCoordinateX(2);
         agent.setCoordinateY(2);
-        agent.moveTo(WEST);
-        assertThat(agent.getCoordinateX()).isEqualTo(1);
+        agent.setFacingDirection(WEST);
+        agent.moveForward();
         assertThat(agent.getCoordinateY()).isEqualTo(2);
+        assertThat(agent.getCoordinateX()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("Agent should decrease y when direction is south")
-    void moveTo__should_decrease_y_when_direction_is_south() {
+    @DisplayName("Agent should move forward to same face direction when facing direction is north")
+    void moveForward__agent_should_move_forward_to_same_face_direction_north() {
         agent.setCoordinateX(2);
         agent.setCoordinateY(2);
-        agent.moveTo(SOUTH);
-        assertThat(agent.getCoordinateX()).isEqualTo(2);
-        assertThat(agent.getCoordinateY()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("Agent should increase y when direction is north")
-    void moveTo__should_increase_y_when_direction_is_north() {
-        agent.setCoordinateX(2);
-        agent.setCoordinateY(2);
-        agent.moveTo(NORTH);
-        assertThat(agent.getCoordinateX()).isEqualTo(2);
+        agent.setFacingDirection(NORTH);
+        agent.moveForward();
         assertThat(agent.getCoordinateY()).isEqualTo(3);
+        assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("Agent should change facing direction to west when current facing direction is north")
-    void turnTo__should_change_facing_direction_to_west_when_current_facing_direction_is_north() {
-        agent.setFacingDirection(NORTH);
-        agent.turnTo(WEST);
-        assertThat(agent.getFacingDirection()).isEqualTo(WEST);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to east when current facing direction is north")
-    void turnTo__should_change_facing_direction_to_east_when_current_facing_direction_is_north() {
-        agent.setFacingDirection(NORTH);
-        agent.turnTo(EAST);
-        assertThat(agent.getFacingDirection()).isEqualTo(EAST);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to east when current facing direction is south")
-    void turnTo__should_change_facing_direction_to_east_when_current_facing_direction_is_south() {
+    @DisplayName("Agent should move forward to same face direction when facing direction is south")
+    void moveForward__agent_should_move_forward_to_same_face_direction_south() {
+        agent.setCoordinateX(2);
+        agent.setCoordinateY(2);
         agent.setFacingDirection(SOUTH);
-        agent.turnTo(EAST);
-        assertThat(agent.getFacingDirection()).isEqualTo(EAST);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to west when current facing direction is south")
-    void turnTo__should_change_facing_direction_to_west_when_current_facing_direction_is_south() {
-        agent.setFacingDirection(SOUTH);
-        agent.turnTo(WEST);
-        assertThat(agent.getFacingDirection()).isEqualTo(WEST);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to east when current facing direction is north")
-    void turnTo__should_change_facing_direction_to_north_when_current_facing_direction_is_east() {
-        agent.setFacingDirection(EAST);
-        agent.turnTo(NORTH);
-        assertThat(agent.getFacingDirection()).isEqualTo(NORTH);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to south when current facing direction is east")
-    void turnTo__should_change_facing_direction_to_south_when_current_facing_direction_is_east() {
-        agent.setFacingDirection(EAST);
-        agent.turnTo(SOUTH);
-        assertThat(agent.getFacingDirection()).isEqualTo(SOUTH);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to south when current facing direction is west")
-    void turnTo__should_change_facing_direction_to_south_when_current_facing_direction_is_west() {
-        agent.setFacingDirection(WEST);
-        agent.turnTo(SOUTH);
-        assertThat(agent.getFacingDirection()).isEqualTo(SOUTH);
-    }
-
-    @Test
-    @DisplayName("Agent should change facing direction to north when current facing direction is west")
-    void turnTo__should_change_facing_direction_to_north_when_current_facing_direction_is_west() {
-        agent.setFacingDirection(WEST);
-        agent.turnTo(NORTH);
-        assertThat(agent.getFacingDirection()).isEqualTo(NORTH);
+        agent.moveForward();
+        assertThat(agent.getCoordinateY()).isEqualTo(1);
+        assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
 
     @ParameterizedTest
