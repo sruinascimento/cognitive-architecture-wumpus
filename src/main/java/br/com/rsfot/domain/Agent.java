@@ -48,7 +48,11 @@ public class Agent {
         this.facingDirection = facingDirection;
     }
 
-    public void moveTo(Direction direction) {
+    public void moveForward() {
+        this.moveTo(this.facingDirection);
+    }
+
+    private void moveTo(Direction direction) {
         switch (direction) {
             case NORTH -> this.coordinateY++;
             case SOUTH -> this.coordinateY--;
