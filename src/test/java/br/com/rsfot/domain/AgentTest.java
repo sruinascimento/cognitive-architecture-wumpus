@@ -45,7 +45,7 @@ class AgentTest {
         agent.setCoordinateY(2);
         agent.setFacingDirection(NORTH);
         agent.moveForward();
-        assertThat(agent.getCoordinateY()).isEqualTo(3);
+        assertThat(agent.getCoordinateY()).isEqualTo(1);
         assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
 
@@ -56,7 +56,7 @@ class AgentTest {
         agent.setCoordinateY(2);
         agent.setFacingDirection(SOUTH);
         agent.moveForward();
-        assertThat(agent.getCoordinateY()).isEqualTo(1);
+        assertThat(agent.getCoordinateY()).isEqualTo(3);
         assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
 }
