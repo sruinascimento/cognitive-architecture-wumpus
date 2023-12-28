@@ -1,8 +1,6 @@
 package br.com.rsfot.domain;
 
-import java.util.List;
-
-import static br.com.rsfot.domain.Direction.*;
+import static br.com.rsfot.domain.Direction.EAST;
 
 public class Agent {
     private int coordinateX;
@@ -54,8 +52,8 @@ public class Agent {
 
     private void moveTo(Direction direction) {
         switch (direction) {
-            case NORTH -> this.coordinateY++;
-            case SOUTH -> this.coordinateY--;
+            case NORTH -> this.coordinateY--;
+            case SOUTH -> this.coordinateY++;
             case EAST -> this.coordinateX++;
             case WEST -> this.coordinateX--;
         }
