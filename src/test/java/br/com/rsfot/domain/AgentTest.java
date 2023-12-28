@@ -59,26 +59,4 @@ class AgentTest {
         assertThat(agent.getCoordinateY()).isEqualTo(1);
         assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
-
-    @ParameterizedTest
-    @DisplayName("Agent should throw IllegalArgumentException when current facing direction is not adjacent to the new facing direction")
-    @MethodSource("provideDirections")
-    void turnTo__should_throw_IllegalArgumentException_when_current_facing_direction_is_not_adjacent_to_the_new_facing_direction(Direction currentFacingDirection, Direction newFacingDirection) {
-        agent.setFacingDirection(currentFacingDirection);
-        assertThatThrownBy(() -> agent.turnTo(newFacingDirection))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Impossible turn to %s from %s".formatted(newFacingDirection, agent.getFacingDirection()));
-    }
-    private static Stream<Arguments> provideDirections() {
-        return Stream.of(
-                Arguments.of(Direction.NORTH, Direction.SOUTH),
-                Arguments.of(Direction.NORTH, Direction.NORTH),
-                Arguments.of(Direction.EAST, Direction.WEST),
-                Arguments.of(Direction.EAST, Direction.EAST),
-                Arguments.of(Direction.SOUTH, Direction.NORTH),
-                Arguments.of(Direction.SOUTH, Direction.SOUTH),
-                Arguments.of(Direction.WEST, Direction.EAST),
-                Arguments.of(Direction.WEST, Direction.WEST)
-        );
-    }
 }

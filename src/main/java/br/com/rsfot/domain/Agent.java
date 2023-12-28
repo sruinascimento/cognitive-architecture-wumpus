@@ -61,17 +61,15 @@ public class Agent {
         }
     }
 
-    public void turnTo(Direction direction) {
-        if (direction == Direction.NORTH && List.of(Direction.EAST, Direction.WEST).contains(this.facingDirection)) {
-            this.facingDirection = Direction.NORTH;
-        } else if (direction == Direction.SOUTH && List.of(Direction.EAST, Direction.WEST).contains(this.facingDirection)) {
-            this.facingDirection = Direction.SOUTH;
-        } else if (direction == Direction.EAST && List.of(Direction.NORTH, Direction.SOUTH).contains(this.facingDirection)) {
-            this.facingDirection = Direction.EAST;
-        } else if (direction == Direction.WEST && List.of(Direction.NORTH, Direction.SOUTH).contains(this.facingDirection)) {
-            this.facingDirection = Direction.WEST;
-        } else {
-            throw new IllegalArgumentException("Impossible turn to %s from %s".formatted(direction, this.facingDirection));
-        }
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "coordinateX=" + coordinateX +
+                ", coordinateY=" + coordinateY +
+                ", name='" + name + '\'' +
+                ", arrow=" + arrow +
+                ", score=" + score +
+                ", facingDirection=" + facingDirection +
+                '}';
     }
 }
