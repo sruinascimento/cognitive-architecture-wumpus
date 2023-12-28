@@ -2,14 +2,10 @@ package br.com.rsfot.domain;
 
 import br.com.rsfot.game.HuntWumpus;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
-
-import java.util.Map;
-import java.util.stream.Stream;
 
 import static br.com.rsfot.domain.Direction.*;
-import static br.com.rsfot.domain.Rotation.*;
+import static br.com.rsfot.domain.Rotation.LEFT;
+import static br.com.rsfot.domain.Rotation.RIGHT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HuntWumpusTest {
@@ -24,10 +20,10 @@ class HuntWumpusTest {
     @DisplayName("Agent should turn left")
     void turnAgentLeft__should_turn_agent_turn_left() {
         huntWumpus.turnAgentTo(LEFT);
-        assertThat(huntWumpus.getAgent().getFacingDirection()).isEqualTo(Direction.NORTH);
+        assertThat(huntWumpus.getAgent().getFacingDirection()).isEqualTo(NORTH);
 
         huntWumpus.turnAgentTo(LEFT);
-        assertThat(huntWumpus.getAgent().getFacingDirection()).isEqualTo(Direction.WEST);
+        assertThat(huntWumpus.getAgent().getFacingDirection()).isEqualTo(WEST);
 
         huntWumpus.turnAgentTo(LEFT);
         assertThat(huntWumpus.getAgent().getFacingDirection()).isEqualTo(SOUTH);

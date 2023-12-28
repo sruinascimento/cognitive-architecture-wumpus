@@ -3,6 +3,8 @@ package br.com.rsfot.game;
 import br.com.rsfot.domain.*;
 
 import static br.com.rsfot.domain.Direction.*;
+import static br.com.rsfot.domain.Rotation.LEFT;
+import static br.com.rsfot.domain.Rotation.RIGHT;
 
 public class HuntWumpus {
     private Agent agent = new Agent();
@@ -17,9 +19,11 @@ public class HuntWumpus {
     }
 
     public void turnAgentTo(Rotation rotation) {
-        switch (rotation) {
-            case LEFT -> turnAgentLeft();
-            case RIGHT -> turnAgentRight();
+        if (LEFT.equals(rotation)) {
+            turnAgentLeft();
+        }
+        if (RIGHT.equals(rotation)) {
+            turnAgentRight();
         }
     }
 
@@ -41,20 +45,24 @@ public class HuntWumpus {
         }
     }
 
-//    public void moveForward() {
-//        if (canWalk())
-//            switch (agent.getFacingDirection()) {
-//                case NORTH -> agent.setCoordinateY(agent.getCoordinateY() + 1);
-//                case SOUTH -> agent.setCoordinateY(agent.getCoordinateY() - 1);
-//                case EAST -> agent.setCoordinateX(agent.getCoordinateX() + 1);
-//                case WEST -> agent.setCoordinateX(agent.getCoordinateX() - 1);
-//            }
-//        }
-//    }
-//
-//    public boolean canWalk() {
-//        return agent.getCoordinateX() < environment.getCave().length - 1
-//                &&
-//                agent.getCoordinateY() < environment.getCave().length - 1;
-//    }
+    public void moveForward() {
+        if (canWalk()) {
+            agent.moveForward();
+        }
+    }
+
+    private boolean canWalk() {
+        switch (agent.getFacingDirection()) {
+            case NORTH:
+                return agent.getCoordinateY() < environment.getDimension() - 1;
+            case SOUTH:
+                return agent.getCoordinateY() > 0;
+            case EAST:
+                return agent.getCoordinateX() < environment.getDimension() - 1;
+            case WEST:
+                return agent.getCoordinateX() > 0;
+            default:
+                return false;
+        }
+    }
 }
