@@ -1,7 +1,7 @@
 # Trabalho de Conclusão de Curso
 
 ### Autor: Rui Nascimento
-### Coorientador: Me. Ingrid Mendes
+### Coorientadora: Me. Ingrid Mendes
 ### Orientador: Dr. Otávio Teixeira
 
 
