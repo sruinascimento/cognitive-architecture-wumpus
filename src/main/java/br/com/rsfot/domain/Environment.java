@@ -1,7 +1,6 @@
 package br.com.rsfot.domain;
 
-import br.com.rsfot.util.InitializeElementsMatrix;
-import br.com.rsfot.util.InitializeFeelingsMatrix;
+import br.com.rsfot.util.*;
 
 import java.util.*;
 
@@ -29,5 +28,9 @@ public class Environment {
 
     public Map<String, Set<EnvironmentFeelings>> getFeelingsByCoordinate() {
         return Collections.unmodifiableMap(feelingsByCoordinate);
+    }
+
+    public void showCave() {
+        System.out.println(MatrixFormatter.formatMatrix(cave, 2, 1));
     }
 }
