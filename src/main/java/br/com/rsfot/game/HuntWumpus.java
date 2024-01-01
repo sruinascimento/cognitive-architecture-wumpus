@@ -48,19 +48,22 @@ public class HuntWumpus {
     public void moveForward() {
         if (canWalk()) {
             agent.moveForward();
+            System.out.println("Moved forward");
+            return;
         }
+        System.out.println("Can't move forward");
     }
 
     private boolean canWalk() {
         switch (agent.getFacingDirection()) {
             case NORTH:
-                return agent.getCoordinateY() < environment.getDimension() - 1;
+                return agent.getCoordinateY() - 1 >= 0;
             case SOUTH:
-                return agent.getCoordinateY() > 0;
+                return agent.getCoordinateY() + 1 <= environment.getDimension() -1;
             case EAST:
-                return agent.getCoordinateX() < environment.getDimension() - 1;
+                return agent.getCoordinateX() + 1 <= environment.getDimension() - 1;
             case WEST:
-                return agent.getCoordinateX() > 0;
+                return agent.getCoordinateX() -1 >= 0;
             default:
                 return false;
         }
