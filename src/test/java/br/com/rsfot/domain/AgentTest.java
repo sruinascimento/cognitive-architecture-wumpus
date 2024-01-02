@@ -59,4 +59,21 @@ class AgentTest {
         assertThat(agent.getCoordinateY()).isEqualTo(3);
         assertThat(agent.getCoordinateX()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("Agent should shoot if has arrow")
+    void shoot__agent_should_shoot_if_has_arrow() {
+        assertThat(agent.hasArrow()).isTrue();
+        agent.shoot();
+        assertThat(agent.hasArrow()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Agent should not shoot f hasn't arrow")
+    void shoot__agent_should_not_shoot_if_has_not_arrow() {
+        agent.setArrow(false);
+        assertThat(agent.hasArrow()).isFalse();
+        agent.shoot();
+        assertThat(agent.hasArrow()).isFalse();
+    }
 }
