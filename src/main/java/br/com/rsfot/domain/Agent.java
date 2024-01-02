@@ -59,6 +59,20 @@ public class Agent {
         }
     }
 
+    public void shoot() {
+        if (arrow) {
+            arrow = false;
+        }
+    }
+
+    public boolean hasArrow() {
+        return arrow;
+    }
+
+    public void setArrow(boolean arrow) {
+        this.arrow = arrow;
+    }
+
     @Override
     public String toString() {
         return "Agent{" +
