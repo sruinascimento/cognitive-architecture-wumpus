@@ -3,6 +3,7 @@ package br.com.rsfot.game;
 import br.com.rsfot.domain.*;
 
 import static br.com.rsfot.domain.Direction.*;
+import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
 import static br.com.rsfot.domain.Rotation.LEFT;
 import static br.com.rsfot.domain.Rotation.RIGHT;
 
@@ -68,4 +69,18 @@ public class HuntWumpus {
                 return false;
         }
     }
+
+    public void grabGold() {
+        if (agent.hasGold()) {
+            System.out.println("Already has gold");
+            return;
+        }
+        if (environment.getFeelingsByCoordinate().get(agent.getStringCoordinate()).contains(GLITTER)) {
+            agent.grab();
+            System.out.println("Grabbed gold");
+            return;
+        }
+        System.out.println("No gold to grab");
+    }
+
 }
