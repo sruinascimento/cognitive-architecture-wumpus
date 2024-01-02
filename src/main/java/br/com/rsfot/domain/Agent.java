@@ -9,6 +9,7 @@ public class Agent {
     private boolean arrow;
     private int score;
     private Direction facingDirection;
+    private boolean gold;
 
     public Agent() {
         this.coordinateX = 0;
@@ -17,6 +18,7 @@ public class Agent {
         this.arrow = true;
         this.score = 1000;
         this.facingDirection = EAST;
+        this.gold = false;
     }
 
     public int getCoordinateX() {
@@ -73,6 +75,13 @@ public class Agent {
         this.arrow = arrow;
     }
 
+    public boolean hasGold() {
+        return gold;
+    }
+
+    public void grab() {
+        this.gold = true;
+    }
     @Override
     public String toString() {
         return "Agent{" +
