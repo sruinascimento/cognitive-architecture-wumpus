@@ -96,6 +96,7 @@ public class Agent {
                 ", arrow=" + arrow +
                 ", score=" + score +
                 ", facingDirection=" + facingDirection +
+                ", gold=" + gold +
                 '}';
     }
 }

@@ -28,6 +28,9 @@ public class Main {
                 case 3:
                     huntWumpus.moveForward();
                     break;
+                case 4:
+                    huntWumpus.grabGold();
+                    break;
                 case 5:
                     exit = true;
                     break;
@@ -43,7 +46,7 @@ public class Main {
                 1 - Turn left
                 2 - Turn right
                 3 - Move forward
-                4 - Shoot
+                4 - Grab Gold
                 5 - Exit
                 """;
     }
