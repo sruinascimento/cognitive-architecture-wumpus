@@ -54,10 +54,10 @@ public class Agent {
 
     private void moveTo(Direction direction) {
         switch (direction) {
-            case NORTH -> this.coordinateY--;
-            case SOUTH -> this.coordinateY++;
-            case EAST -> this.coordinateX++;
-            case WEST -> this.coordinateX--;
+            case NORTH -> this.coordinateX--;
+            case SOUTH -> this.coordinateX++;
+            case EAST -> this.coordinateY++;
+            case WEST -> this.coordinateY--;
         }
     }
 
