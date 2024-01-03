@@ -82,6 +82,11 @@ public class Agent {
     public void grab() {
         this.gold = true;
     }
+
+    public String getStringCoordinate() {
+        return coordinateX + "," + coordinateY;
+    }
+
     @Override
     public String toString() {
         return "Agent{" +
