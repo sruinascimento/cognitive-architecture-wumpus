@@ -83,4 +83,12 @@ public class HuntWumpus {
         System.out.println("No gold to grab");
     }
 
+    public void shoot() {
+        if (agent.hasArrow()) {
+            agent.shoot();
+            System.out.println("Shot");
+            return;
+        }
+        System.out.println("No arrow to shoot");
+    }
 }
