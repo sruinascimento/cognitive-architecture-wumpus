@@ -32,6 +32,9 @@ public class Main {
                     huntWumpus.grabGold();
                     break;
                 case 5:
+                    huntWumpus.shoot();
+                    break;
+                case 6:
                     exit = true;
                     break;
                 default:
@@ -47,7 +50,8 @@ public class Main {
                 2 - Turn right
                 3 - Move forward
                 4 - Grab Gold
-                5 - Exit
+                5 - Shoot
+                6 - Exit
                 """;
     }
 }
