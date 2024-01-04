@@ -19,3 +19,4 @@ mais especificamente usando o módulo [MECA](https://github.com/CST-Group/codela
 - [x] Matriz de sensações
 - [x] rotação do agente em 90º graus para a direita e esquerda
 - [x] movimentação do agente para frente
+- [x] agente atira uma vez 
