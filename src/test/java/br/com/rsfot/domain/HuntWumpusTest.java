@@ -8,6 +8,8 @@ import java.util.Set;
 
 import static br.com.rsfot.domain.Direction.*;
 import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
+import static br.com.rsfot.domain.EnvironmentObject.PIT;
+import static br.com.rsfot.domain.EnvironmentObject.WUMPUS;
 import static br.com.rsfot.domain.Rotation.LEFT;
 import static br.com.rsfot.domain.Rotation.RIGHT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -86,5 +88,51 @@ class HuntWumpusTest {
         huntWumpus.grabGold();
 
         assertThat(huntWumpus.getAgent().hasGold()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Agent should die if it moves to a position where there is a pit")
+    void moveForward__agent_must_die_if_it_moves_to_a_position_where_there_is_a_pit() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithPitsCustomized();
+        assertThat(huntWumpusCustomized.getAgent().isAlive()).isTrue();
+        huntWumpusCustomized.moveForward();
+        assertThat(huntWumpusCustomized.getAgent().isAlive()).isFalse();
+    }
+
+    private HuntWumpus createHuntWumpusWithPitsCustomized() {
+        String[][] cave = {
+                {"", PIT.name(), "", ""},
+                {PIT.name(), PIT.name(), "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""}
+        };
+
+        Environment environment = new Environment(cave, 4);
+
+        Agent agent = new Agent();
+        return new HuntWumpus(agent, environment);
+    }
+
+    @Test
+    @DisplayName("Agent should die if it moves to a position where there is a wumpus")
+    void moveForward__agent_must_die_if_it_moves_to_a_position_where_there_is_a_wumpus() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized();
+        assertThat(huntWumpusCustomized.getAgent().isAlive()).isTrue();
+        huntWumpusCustomized.moveForward();
+        assertThat(huntWumpusCustomized.getAgent().isAlive()).isFalse();
+    }
+
+    private HuntWumpus createHuntWumpusWithWumpusCustomized() {
+        String[][] cave = {
+                {"", WUMPUS.name(), "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""}
+        };
+
+        Environment environment = new Environment(cave, 4);
+
+        Agent agent = new Agent();
+        return new HuntWumpus(agent, environment);
     }
 }
