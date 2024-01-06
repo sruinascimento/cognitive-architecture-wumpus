@@ -18,6 +18,12 @@ public class Environment {
         this.feelingsByCoordinate = InitializeFeelingsMatrix.setup(cave);
     }
 
+    public Environment(String[][] cave, int dimension) {
+        this.cave = cave;
+        this.dimension = dimension;
+        this.feelingsByCoordinate = InitializeFeelingsMatrix.setup(cave);
+    }
+
     public String[][] getCave() {
         return cave;
     }
@@ -32,5 +38,26 @@ public class Environment {
 
     public void showCave() {
         System.out.println(MatrixFormatter.formatMatrix(cave, 2, 1));
+    }
+
+    public void setCave(String[][] cave) {
+        this.cave = cave;
+    }
+
+    public boolean isThereAPitAt(int x, int y) {
+        return cave[x][y].equals(EnvironmentObject.PIT.name());
+    }
+
+    public boolean isThereAWumpusAt(int x, int y) {
+        return cave[x][y].equals(EnvironmentObject.WUMPUS.name());
+    }
+
+    @Override
+    public String toString() {
+        return "Environment{" +
+                "cave=" + Arrays.toString(cave) +
+                ", dimension=" + dimension +
+                ", feelingsByCoordinate=" + feelingsByCoordinate +
+                '}';
     }
 }

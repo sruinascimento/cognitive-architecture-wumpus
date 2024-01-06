@@ -10,6 +10,7 @@ public class Agent {
     private int score;
     private Direction facingDirection;
     private boolean gold;
+    private boolean alive;
 
     public Agent() {
         this.coordinateX = 0;
@@ -19,6 +20,7 @@ public class Agent {
         this.score = 1000;
         this.facingDirection = EAST;
         this.gold = false;
+        this.alive = true;
     }
 
     public int getCoordinateX() {
@@ -83,6 +85,14 @@ public class Agent {
         this.gold = true;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void die() {
+        this.alive = false;
+    }
+
     public String getStringCoordinate() {
         return coordinateX + "," + coordinateY;
     }
@@ -96,6 +106,8 @@ public class Agent {
                 ", arrow=" + arrow +
                 ", score=" + score +
                 ", facingDirection=" + facingDirection +
+                ", gold=" + gold +
+                ", alive=" + alive +
                 '}';
     }
 }

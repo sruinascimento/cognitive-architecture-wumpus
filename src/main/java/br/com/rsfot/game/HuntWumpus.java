@@ -4,12 +4,22 @@ import br.com.rsfot.domain.*;
 
 import static br.com.rsfot.domain.Direction.*;
 import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
+import static br.com.rsfot.domain.EnvironmentObject.PIT;
 import static br.com.rsfot.domain.Rotation.LEFT;
 import static br.com.rsfot.domain.Rotation.RIGHT;
 
 public class HuntWumpus {
     private Agent agent = new Agent();
     private Environment environment = new Environment(4);
+
+    public HuntWumpus() {
+
+    }
+
+    public HuntWumpus(Agent agent, Environment environment) {
+        this.agent = agent;
+        this.environment = environment;
+    }
 
     public Agent getAgent() {
         return agent;
@@ -47,12 +57,12 @@ public class HuntWumpus {
     }
 
     public void moveForward() {
-        if (canWalk()) {
+        if (canWalk() && agent.isAlive()) {
             agent.moveForward();
-            System.out.println("Moved forward");
-            return;
+            if(isTheAgentDead()) {
+                agent.die();
+            }
         }
-        System.out.println("Can't move forward");
     }
 
     private boolean canWalk() {
@@ -71,24 +81,20 @@ public class HuntWumpus {
     }
 
     public void grabGold() {
-        if (agent.hasGold()) {
-            System.out.println("Already has gold");
-            return;
-        }
         if (environment.getFeelingsByCoordinate().get(agent.getStringCoordinate()).contains(GLITTER)) {
             agent.grab();
-            System.out.println("Grabbed gold");
-            return;
         }
-        System.out.println("No gold to grab");
     }
 
     public void shoot() {
         if (agent.hasArrow()) {
             agent.shoot();
-            System.out.println("Shot");
-            return;
         }
-        System.out.println("No arrow to shoot");
+    }
+
+    public boolean isTheAgentDead() {
+        boolean agentFallIntoAPit = environment.isThereAPitAt(agent.getCoordinateX(), agent.getCoordinateY());
+        boolean agentDevoredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY());
+        return agentFallIntoAPit || agentDevoredByWumpus;
     }
 }
