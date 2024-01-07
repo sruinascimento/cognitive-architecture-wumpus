@@ -10,11 +10,16 @@ import static br.com.rsfot.domain.Rotation.RIGHT;
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         HuntWumpus huntWumpus = new HuntWumpus();
 
-        boolean exit = false;
-        while (!exit) {
+        boolean gameOver = true;
+        while (gameOver) {
+
+            if (huntWumpus.isTheAgentDead()) {
+                System.out.println("You died - GAME OVER");
+                gameOver = false;
+                continue;
+            }
             huntWumpus.getEnvironment().showCave();
             System.out.println(menu());
             System.out.println(huntWumpus.getAgent());
@@ -37,7 +42,7 @@ public class App {
                     huntWumpus.shoot();
                     break;
                 case 6:
-                    exit = true;
+                    gameOver = true;
                     break;
                 default:
                     System.out.println("Invalid option");

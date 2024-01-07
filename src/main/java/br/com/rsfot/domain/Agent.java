@@ -93,8 +93,27 @@ public class Agent {
         this.alive = false;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public String getStringCoordinate() {
         return coordinateX + "," + coordinateY;
+    }
+
+    public void decreasePointByAction() {
+        this.score--;
+    }
+
+    public void decreasePointByShoot() {
+        this.score -= 10;
+    }
+    public void decreasePointByDeath() {
+        this.score -= 1000;
+    }
+
+    public void increasePointByGrabGoldAndWinTheGame() {
+        this.score += 1000;
     }
 
     @Override

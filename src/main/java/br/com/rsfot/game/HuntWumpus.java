@@ -4,7 +4,6 @@ import br.com.rsfot.domain.*;
 
 import static br.com.rsfot.domain.Direction.*;
 import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
-import static br.com.rsfot.domain.EnvironmentObject.PIT;
 import static br.com.rsfot.domain.Rotation.LEFT;
 import static br.com.rsfot.domain.Rotation.RIGHT;
 
@@ -30,11 +29,14 @@ public class HuntWumpus {
     }
 
     public void turnAgentTo(Rotation rotation) {
-        if (LEFT.equals(rotation)) {
-            turnAgentLeft();
-        }
-        if (RIGHT.equals(rotation)) {
-            turnAgentRight();
+        if (agent.isAlive()) {
+            if (LEFT.equals(rotation)) {
+                turnAgentLeft();
+            }
+            if (RIGHT.equals(rotation)) {
+                turnAgentRight();
+            }
+            agent.decreasePointByAction();
         }
     }
 
@@ -59,8 +61,10 @@ public class HuntWumpus {
     public void moveForward() {
         if (canWalk() && agent.isAlive()) {
             agent.moveForward();
+            agent.decreasePointByAction();
             if(isTheAgentDead()) {
                 agent.die();
+                agent.decreasePointByDeath();
             }
         }
     }
@@ -83,18 +87,20 @@ public class HuntWumpus {
     public void grabGold() {
         if (environment.getFeelingsByCoordinate().get(agent.getStringCoordinate()).contains(GLITTER)) {
             agent.grab();
+            agent.decreasePointByAction();
         }
     }
 
     public void shoot() {
         if (agent.hasArrow()) {
             agent.shoot();
+            agent.decreasePointByShoot();
         }
     }
 
     public boolean isTheAgentDead() {
         boolean agentFallIntoAPit = environment.isThereAPitAt(agent.getCoordinateX(), agent.getCoordinateY());
-        boolean agentDevoredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY());
-        return agentFallIntoAPit || agentDevoredByWumpus;
+        boolean agentDevouredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY());
+        return agentFallIntoAPit || agentDevouredByWumpus;
     }
 }
