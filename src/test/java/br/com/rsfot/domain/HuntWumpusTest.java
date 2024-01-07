@@ -135,4 +135,61 @@ class HuntWumpusTest {
         Agent agent = new Agent();
         return new HuntWumpus(agent, environment);
     }
+
+    @Test
+    @DisplayName("Agent should not move forward if it is dead")
+    void moveForward__agent_must_not_move_forward_if_it_is_dead(){
+        huntWumpus.getAgent().die();
+        huntWumpus.moveForward();
+        assertThat(huntWumpus.getAgent().getCoordinateX()).isZero();
+        assertThat(huntWumpus.getAgent().getCoordinateY()).isZero();
+    }
+
+    @Test
+    @DisplayName("When agent moves forward, one point must be decrease")
+    void moveForward__one_point_must_be_decrease_when_agent_moves_forward(){
+        huntWumpus.moveForward();
+        assertThat(huntWumpus.getAgent().getScore()).isEqualTo(999);
+    }
+
+    @Test
+    @DisplayName("When agent turns left, one point must be decrease")
+    void turnAgentLeft__one_point_must_be_decrease_when_agent_turns_left(){
+        huntWumpus.turnAgentTo(LEFT);
+        assertThat(huntWumpus.getAgent().getScore()).isEqualTo(999);
+    }
+
+    @Test
+    @DisplayName("When agent turns right, one point must be decrease")
+    void turnAgentRight__one_point_must_be_decrease_when_agent_turns_right(){
+        huntWumpus.turnAgentTo(RIGHT);
+        assertThat(huntWumpus.getAgent().getScore()).isEqualTo(999);
+    }
+
+    @Test
+    @DisplayName("When agent grabs gold, one point must be decrease")
+    void grabGold__one_point_must_be_decrease_when_agent_grabs_gold(){
+        int[] goldCoordinate = retrieveGoldCoordinate(huntWumpus.getEnvironment().getFeelingsByCoordinate());
+        huntWumpus.getAgent().setCoordinateX(goldCoordinate[0]);
+        huntWumpus.getAgent().setCoordinateY(goldCoordinate[1]);
+
+        huntWumpus.grabGold();
+
+        assertThat(huntWumpus.getAgent().getScore()).isEqualTo(999);
+    }
+
+    @Test
+    @DisplayName("When agent die, one thousand points must be decrease")
+    void moveForward__should_deacrease_thousand_points_by_death_when_agent_dies(){
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized();
+        huntWumpusCustomized.moveForward();
+        assertThat(huntWumpusCustomized.getAgent().getScore()).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("When agent shoots, ten points must be decrease")
+    void shoot__should_decrease_ten_points_when_agent_shoots(){
+        huntWumpus.shoot();
+        assertThat(huntWumpus.getAgent().getScore()).isEqualTo(990);
+    }
 }
