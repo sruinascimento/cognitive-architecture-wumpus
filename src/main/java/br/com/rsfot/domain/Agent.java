@@ -11,6 +11,7 @@ public class Agent {
     private Direction facingDirection;
     private boolean gold;
     private boolean alive;
+    private boolean killedWumpus;
 
     public Agent() {
         this.coordinateX = 0;
@@ -21,6 +22,19 @@ public class Agent {
         this.facingDirection = EAST;
         this.gold = false;
         this.alive = true;
+        this.killedWumpus = false;
+    }
+
+    public Agent(int coordinateX, int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+        this.name = name;
+        this.arrow = arrow;
+        this.score = score;
+        this.facingDirection = facingDirection;
+        this.gold = gold;
+        this.alive = alive;
+        this.killedWumpus = killedWumpus;
     }
 
     public int getCoordinateX() {
@@ -114,6 +128,13 @@ public class Agent {
 
     public void increasePointByGrabGoldAndWinTheGame() {
         this.score += 1000;
+    }
+
+    public boolean isKilledWumpus() {
+        return killedWumpus;
+    }
+    public void killTheWumpus() {
+        this.killedWumpus = true;
     }
 
     @Override

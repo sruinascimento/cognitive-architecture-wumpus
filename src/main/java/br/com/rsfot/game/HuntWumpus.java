@@ -4,6 +4,7 @@ import br.com.rsfot.domain.*;
 
 import static br.com.rsfot.domain.Direction.*;
 import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
+import static br.com.rsfot.domain.EnvironmentObject.*;
 import static br.com.rsfot.domain.Rotation.LEFT;
 import static br.com.rsfot.domain.Rotation.RIGHT;
 
@@ -95,6 +96,11 @@ public class HuntWumpus {
         if (agent.hasArrow()) {
             agent.shoot();
             agent.decreasePointByShoot();
+            if(isTheAgentKillTheWumpus()) {
+                agent.killTheWumpus();
+                System.out.println(EnvironmentFeelings.WUMPUS_SCREAM.name());
+                System.out.println("You killed the Wumpus");
+            }
         }
     }
 
@@ -102,5 +108,68 @@ public class HuntWumpus {
         boolean agentFallIntoAPit = environment.isThereAPitAt(agent.getCoordinateX(), agent.getCoordinateY());
         boolean agentDevouredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY());
         return agentFallIntoAPit || agentDevouredByWumpus;
+    }
+
+    public boolean isTheAgentKillTheWumpus() {
+        if(isAgentOnTheSameLineOfWumpus()) {
+            if(agentIsOnTheLeftOfWumpus()) {
+                return agent.getFacingDirection().equals(EAST);
+            }
+            if(agentIsOnTheRightOfWumpus()) {
+                return agent.getFacingDirection().equals(WEST);
+            }
+        }
+
+        if(isAgentOnTheSameColumnOfWumpus()) {
+            if(agentIsAboveWumpus()) {
+                return agent.getFacingDirection().equals(SOUTH);
+            }
+            if(agentIsBelowWumpus()) {
+                return agent.getFacingDirection().equals(NORTH);
+            }
+        }
+        return false;
+    }
+
+    private boolean isAgentOnTheSameLineOfWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[0] == wumpusCoordinate[0];
+    }
+
+    private boolean isAgentOnTheSameColumnOfWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[1] == wumpusCoordinate[1];
+    }
+
+    private boolean agentIsOnTheLeftOfWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[1] < wumpusCoordinate[1];
+    }
+
+    private boolean agentIsOnTheRightOfWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[1] > wumpusCoordinate[1];
+    }
+
+    private boolean agentIsAboveWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[0] < wumpusCoordinate[0];
+    }
+
+    private boolean agentIsBelowWumpus() {
+        int[] wumpusCoordinate = environment.getCoordinateOf(WUMPUS);
+        int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
+
+        return agentCoordinate[0] > wumpusCoordinate[0];
     }
 }

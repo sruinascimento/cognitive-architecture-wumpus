@@ -60,4 +60,15 @@ public class Environment {
                 ", feelingsByCoordinate=" + feelingsByCoordinate +
                 '}';
     }
+
+    public int[] getCoordinateOf(EnvironmentObject object) {
+        for (int i = 0; i < cave.length; i++) {
+            for (int j = 0; j < cave.length; j++) {
+                if (cave[i][j].equals(object.name())) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        throw new RuntimeException("Object not found");
+    }
 }
