@@ -117,13 +117,13 @@ class HuntWumpusTest {
     @Test
     @DisplayName("Agent should die if it moves to a position where there is a wumpus")
     void moveForward__agent_must_die_if_it_moves_to_a_position_where_there_is_a_wumpus() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(0, 1);
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(0, 1);
         assertThat(huntWumpusCustomized.getAgent().isAlive()).isTrue();
         huntWumpusCustomized.moveForward();
         assertThat(huntWumpusCustomized.getAgent().isAlive()).isFalse();
     }
 
-    private HuntWumpus createHuntWumpusWithWumpusAndAgentCustomized(int x, int y) {
+    private HuntWumpus createHuntWumpusWithWumpusCustomized(int x, int y) {
         String[][] cave = {
                 {"", "", "", ""},
                 {"", "", "", ""},
@@ -184,7 +184,7 @@ class HuntWumpusTest {
     @Test
     @DisplayName("When agent die, one thousand points must be decrease")
     void moveForward__should_deacrease_thousand_points_by_death_when_agent_dies() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(0, 1);
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(0, 1);
         huntWumpusCustomized.moveForward();
         assertThat(huntWumpusCustomized.getAgent().getScore()).isEqualTo(-1);
     }
@@ -200,23 +200,39 @@ class HuntWumpusTest {
     @Test
     @DisplayName("When agent shoot, should kill the wumpus if it is in the same line and looking for EAST and him must be before wumpus")
     void shoot__should_kill_the_wumpus_if_it_is_in_the_same_line_and_looking_for_east() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(0, 1);
-        int[] coordinateOfWumpus = huntWumpusCustomized.getEnvironment().getCoordinateOf(WUMPUS);
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(0, 1);
 
         huntWumpusCustomized.shoot();
 
         assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
                 .isTrue();
         assertThat(huntWumpusCustomized.getAgent().getCoordinateX())
-                .isEqualTo(coordinateOfWumpus[0]);
+                .isEqualTo(0);
         assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
                 .isEqualTo(EAST);
     }
 
     @Test
-    @DisplayName("When agent shoot, should kill the wumpus if it is in the same line and looking for WESR and him must be after wumpus")
+    @DisplayName("When agent shoot, should not kill the wumpus if it is in the same line and looking for opposite wumpus direction")
+    void shoot__should_not_kill_the_wumpus_if_it_is_in_the_same_line_and_looking_for_opposite_wumpus_direction() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(0, 1);
+        huntWumpusCustomized.getAgent().setCoordinateX(0);
+        huntWumpusCustomized.getAgent().setCoordinateY(2);
+        huntWumpusCustomized.getAgent().setFacingDirection(EAST);
+
+        huntWumpusCustomized.shoot();
+
+        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+                .isFalse();
+
+        assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
+                .isEqualTo(EAST);
+    }
+
+    @Test
+    @DisplayName("When agent shoot, should kill the wumpus if it is in the same line and looking for WEST and him must be after wumpus")
     void shoot__should_kill_the_wumpus_if_it_is_in_the_same_line_and_looking_for_west() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(0, 1);
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(0, 1);
         huntWumpusCustomized.getAgent().setCoordinateX(0);
         huntWumpusCustomized.getAgent().setCoordinateY(2);
         huntWumpusCustomized.getAgent().setFacingDirection(WEST);
@@ -231,34 +247,69 @@ class HuntWumpusTest {
     }
 
     @Test
-    @DisplayName("When agent shoot, should kill the wumpus if it is in the same column and looking for NORTH and him must be after wumpus")
-    void shoot__should_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_north() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(1, 0);
+    @DisplayName("When agent shoot, should not kill the wumpus if it is in the same column and looking for opposite direction")
+    void shoot__should_not_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_opposite_direction() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(1, 0);
         huntWumpusCustomized.getAgent().setCoordinateX(2);
-        huntWumpusCustomized.getAgent().setCoordinateY(0);
-        huntWumpusCustomized.getAgent().setFacingDirection(NORTH);
-
-        huntWumpusCustomized.shoot();
-
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
-                .isTrue();
-
-        assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
-                .isEqualTo(NORTH);
-    }
-
-    @Test
-    @DisplayName("When agent shoot, should kill the wumpus if it is in the same column and looking for SOUTH and him must be before wumpus")
-    void shoot__should_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_south() {
-        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusAndAgentCustomized(1, 0);
-        huntWumpusCustomized.getAgent().setCoordinateX(0);
         huntWumpusCustomized.getAgent().setCoordinateY(0);
         huntWumpusCustomized.getAgent().setFacingDirection(SOUTH);
 
         huntWumpusCustomized.shoot();
 
         assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
-                .isTrue();
+                .isFalse();
+
+        assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
+                .isEqualTo(SOUTH);
+    }
+
+    @Test
+    @DisplayName("When agent shoot, should kill the wumpus if it is in the same column and looking for NORTH and him must be after wumpus")
+    void shoot__should_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_north() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(1, 0);
+        huntWumpusCustomized.getAgent().setCoordinateX(2);
+        huntWumpusCustomized.getAgent().setCoordinateY(0);
+        huntWumpusCustomized.getAgent().setFacingDirection(SOUTH);
+
+        huntWumpusCustomized.shoot();
+
+        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+                .isFalse();
+
+        assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
+                .isEqualTo(SOUTH);
+    }
+
+    @Test
+    @DisplayName("When agent shoot, should not kill the wumpus if it is in the same column and looking for SOUTH and him must be after wumpus")
+    void shoot__should_not_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_south() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(1, 0);
+        huntWumpusCustomized.getAgent().setCoordinateX(0);
+        huntWumpusCustomized.getAgent().setCoordinateY(0);
+        huntWumpusCustomized.getAgent().setFacingDirection(NORTH);
+
+        huntWumpusCustomized.shoot();
+
+        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+                .isFalse();
+
+        assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
+                .isEqualTo(NORTH);
+    }
+
+
+    @Test
+    @DisplayName("When agent shoot, should kill the wumpus if it is in the same column and looking for SOUTH and him must be before wumpus")
+    void shoot__should_kill_the_wumpus_if_it_is_in_the_same_column_and_looking_for_south() {
+        HuntWumpus huntWumpusCustomized = createHuntWumpusWithWumpusCustomized(1, 0);
+        huntWumpusCustomized.getAgent().setCoordinateX(2);
+        huntWumpusCustomized.getAgent().setCoordinateY(0);
+        huntWumpusCustomized.getAgent().setFacingDirection(SOUTH);
+
+        huntWumpusCustomized.shoot();
+
+        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+                .isFalse();
 
         assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
                 .isEqualTo(SOUTH);
