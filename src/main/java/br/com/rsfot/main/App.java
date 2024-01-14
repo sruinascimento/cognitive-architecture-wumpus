@@ -12,18 +12,26 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         HuntWumpus huntWumpus = new HuntWumpus();
 
-        boolean gameOver = true;
-        while (gameOver) {
+        boolean gameOver = false;
+        while (!gameOver) {
 
             if (huntWumpus.isTheAgentDead()) {
                 System.out.println("You died - GAME OVER");
-                gameOver = false;
+                gameOver = true;
+                continue;
+            }
+
+            if (huntWumpus.getAgent().agentWinTheGame()) {
+                System.out.println("You win - GAME OVER");
+                gameOver = true;
                 continue;
             }
             huntWumpus.getEnvironment().showCave();
             System.out.println(menu());
             System.out.println(huntWumpus.getAgent());
-            System.out.println(huntWumpus.getEnvironment().getFeelingsByCoordinate());
+            System.out.print(huntWumpus.getEnvironment().getFeelingsByCoordinate());
+            System.out.println(" -> Feelings[%d,%d]:".formatted(huntWumpus.getAgent().getCoordinateX(), huntWumpus.getAgent().getCoordinateY()));
+            System.out.println(huntWumpus.getEnvironment().getFeelingsByCoordinate().get(huntWumpus.getAgent().getCoordinateX() + "," + huntWumpus.getAgent().getCoordinateY()));
             int option = Integer.parseInt(scanner.nextLine());
             switch (option) {
                 case 1:
@@ -48,6 +56,12 @@ public class App {
                     System.out.println("Invalid option");
             }
         }
+
+        scanner.close();
+
+        System.out.println("\nResultado final:");
+        System.out.println(huntWumpus.getAgent());
+        System.out.println(huntWumpus.getEnvironment().getFeelingsByCoordinate());
 
     }
 

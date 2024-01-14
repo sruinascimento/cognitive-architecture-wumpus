@@ -204,7 +204,7 @@ class HuntWumpusTest {
 
         huntWumpusCustomized.shoot();
 
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isTrue();
         assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
                 .isEqualTo(EAST);
@@ -220,7 +220,7 @@ class HuntWumpusTest {
 
         huntWumpusCustomized.shoot();
 
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isFalse();
 
         assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
@@ -237,7 +237,7 @@ class HuntWumpusTest {
 
         huntWumpusCustomized.shoot();
 
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isTrue();
 
         assertThat(huntWumpusCustomized.getAgent().getFacingDirection())
@@ -252,7 +252,7 @@ class HuntWumpusTest {
         huntWumpusWithWumpusCustomized.getAgent().setCoordinateY(2);
         huntWumpusWithWumpusCustomized.getAgent().setFacingDirection(EAST);
 
-        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledWumpus()).isFalse();
+        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledTheWumpus()).isFalse();
     }
 
     @Test
@@ -265,7 +265,7 @@ class HuntWumpusTest {
 
         huntWumpusCustomized.shoot();
 
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isTrue();
     }
 
@@ -279,7 +279,7 @@ class HuntWumpusTest {
 
         huntWumpusCustomized.shoot();
 
-        assertThat(huntWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isFalse();
     }
 
@@ -293,7 +293,7 @@ class HuntWumpusTest {
 
         huntWumpusWithWumpusCustomized.shoot();
 
-        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isFalse();
     }
 
@@ -307,7 +307,21 @@ class HuntWumpusTest {
 
         huntWumpusWithWumpusCustomized.shoot();
 
-        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledWumpus())
+        assertThat(huntWumpusWithWumpusCustomized.getAgent().isKilledTheWumpus())
                 .isTrue();
+    }
+
+    @Test
+    void moveForward__should_increase_1000_points_if_agent_it_is_on_initial_position_and_has_gold() {
+        HuntWumpus huntWumpusWithWumpusCustomized = createHuntWumpusWithWumpusCustomized(3, 3);
+        huntWumpusWithWumpusCustomized.getAgent().setCoordinateX(0);
+        huntWumpusWithWumpusCustomized.getAgent().setCoordinateY(1);
+        huntWumpusWithWumpusCustomized.getAgent().setFacingDirection(WEST);
+        huntWumpusWithWumpusCustomized.getAgent().setGold(true);
+
+        huntWumpusWithWumpusCustomized.moveForward();
+
+        assertThat(huntWumpusWithWumpusCustomized.getAgent().getScore()).isEqualTo(1999);
+        assertThat(huntWumpusWithWumpusCustomized.isAgentWinTheGame()).isTrue();
     }
 }

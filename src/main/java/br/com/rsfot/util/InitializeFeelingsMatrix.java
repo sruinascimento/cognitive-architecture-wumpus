@@ -34,7 +34,7 @@ public class InitializeFeelingsMatrix {
                 feelingsByCoordinate.put(i + "," + j, feelings);
             }
         }
-        return Collections.unmodifiableMap(feelingsByCoordinate);
+        return feelingsByCoordinate;
     }
 
     private static boolean isGlitter(int x, int y, String[][] environmentMatrix) {

@@ -11,6 +11,7 @@ import static br.com.rsfot.domain.Rotation.RIGHT;
 public class HuntWumpus {
     private Agent agent = new Agent();
     private Environment environment = new Environment(4);
+    private boolean agentWinTheGame = false;
 
     public HuntWumpus() {
 
@@ -67,19 +68,23 @@ public class HuntWumpus {
                 agent.die();
                 agent.decreasePointByDeath();
             }
+            if (agent.isAtInitialPosition() && agent.hasGold()) {
+                agent.increasePointByGrabGoldAndWinTheGame();
+                this.agentWinTheGame = true;
+            }
         }
     }
 
     private boolean canWalk() {
         switch (agent.getFacingDirection()) {
             case NORTH:
-                return agent.getCoordinateY() - 1 >= 0;
+                return agent.getCoordinateX() - 1 >= 0;
             case SOUTH:
-                return agent.getCoordinateY() + 1 <= environment.getDimension() -1;
+                return agent.getCoordinateX() + 1 <= environment.getDimension() -1;
             case EAST:
-                return agent.getCoordinateX() + 1 <= environment.getDimension() - 1;
+                return agent.getCoordinateY() + 1 <= environment.getDimension() - 1;
             case WEST:
-                return agent.getCoordinateX() -1 >= 0;
+                return agent.getCoordinateY() -1 >= 0;
             default:
                 return false;
         }
@@ -89,6 +94,9 @@ public class HuntWumpus {
         if (environment.getFeelingsByCoordinate().get(agent.getStringCoordinate()).contains(GLITTER)) {
             agent.grab();
             agent.decreasePointByAction();
+            if(agent.hasGold()) {
+               environment.mineGold(agent.getCoordinateX(), agent.getCoordinateY());
+            }
         }
     }
 
@@ -106,7 +114,7 @@ public class HuntWumpus {
 
     public boolean isTheAgentDead() {
         boolean agentFallIntoAPit = environment.isThereAPitAt(agent.getCoordinateX(), agent.getCoordinateY());
-        boolean agentDevouredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY());
+        boolean agentDevouredByWumpus = environment.isThereAWumpusAt(agent.getCoordinateX(), agent.getCoordinateY()) && !agent.isKilledTheWumpus();
         return agentFallIntoAPit || agentDevouredByWumpus;
     }
 
@@ -171,5 +179,9 @@ public class HuntWumpus {
         int[] agentCoordinate = {agent.getCoordinateX(), agent.getCoordinateY()};
 
         return agentCoordinate[0] > wumpusCoordinate[0];
+    }
+
+    public boolean isAgentWinTheGame() {
+        return agentWinTheGame;
     }
 }

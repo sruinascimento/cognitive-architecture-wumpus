@@ -3,38 +3,22 @@ package br.com.rsfot.domain;
 import static br.com.rsfot.domain.Direction.EAST;
 
 public class Agent {
-    private int coordinateX;
-    private int coordinateY;
-    private String name;
-    private boolean arrow;
-    private int score;
-    private Direction facingDirection;
-    private boolean gold;
-    private boolean alive;
-    private boolean killedWumpus;
+    private int coordinateX = 0;
+    private int coordinateY = 0;
+    private String name = "ANAKIN";
+    private boolean arrow = true;
+    private int score = 1000;
+    private Direction facingDirection = EAST;
+    private boolean gold = false;
+    private boolean alive = true;
+    private boolean killedTheWumpus = false;
 
     public Agent() {
-        this.coordinateX = 0;
-        this.coordinateY = 0;
-        this.name = "ANAKIN";
-        this.arrow = true;
-        this.score = 1000;
-        this.facingDirection = EAST;
-        this.gold = false;
-        this.alive = true;
-        this.killedWumpus = false;
     }
 
     public Agent(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
-        this.name = name;
-        this.arrow = arrow;
-        this.score = score;
-        this.facingDirection = facingDirection;
-        this.gold = gold;
-        this.alive = alive;
-        this.killedWumpus = killedWumpus;
     }
 
     public int getCoordinateX() {
@@ -95,6 +79,10 @@ public class Agent {
         return gold;
     }
 
+    public void setGold(boolean gold) {
+        this.gold = gold;
+    }
+
     public void grab() {
         this.gold = true;
     }
@@ -130,11 +118,19 @@ public class Agent {
         this.score += 1000;
     }
 
-    public boolean isKilledWumpus() {
-        return killedWumpus;
+    public boolean isKilledTheWumpus() {
+        return killedTheWumpus;
     }
     public void killTheWumpus() {
-        this.killedWumpus = true;
+        this.killedTheWumpus = true;
+    }
+
+    public boolean isAtInitialPosition() {
+        return this.coordinateX == 0 && this.coordinateY == 0;
+    }
+
+    public boolean agentWinTheGame() {
+        return this.gold && this.isAtInitialPosition();
     }
 
     @Override
@@ -148,6 +144,7 @@ public class Agent {
                 ", facingDirection=" + facingDirection +
                 ", gold=" + gold +
                 ", alive=" + alive +
+                ", killedWumpus=" + killedTheWumpus +
                 '}';
     }
 }

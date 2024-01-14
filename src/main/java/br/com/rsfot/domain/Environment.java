@@ -4,6 +4,9 @@ import br.com.rsfot.util.*;
 
 import java.util.*;
 
+import static br.com.rsfot.domain.EnvironmentFeelings.GLITTER;
+import static br.com.rsfot.domain.EnvironmentObject.GOLD;
+
 public class Environment {
     private String[][] cave;
     private int dimension;
@@ -70,5 +73,21 @@ public class Environment {
             }
         }
         throw new RuntimeException("Object not found");
+    }
+
+    private void removeGlitterFromFeelings(int x, int y) {
+        Set<EnvironmentFeelings> environmentFeelingsByXandY = feelingsByCoordinate.get(x + "," + y);
+        environmentFeelingsByXandY.remove(GLITTER);
+        feelingsByCoordinate.put(x + "," + y, environmentFeelingsByXandY);
+    }
+
+    private void removeGoldFromCave() {
+        int[] goldCoordinate = getCoordinateOf(GOLD);
+        cave[goldCoordinate[0]][goldCoordinate[1]] = "";
+    }
+
+    public void mineGold(int x, int y) {
+        removeGlitterFromFeelings(x, y);
+        removeGoldFromCave();
     }
 }
