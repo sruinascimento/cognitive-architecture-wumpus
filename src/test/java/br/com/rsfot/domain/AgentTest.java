@@ -1,14 +1,9 @@
 package br.com.rsfot.domain;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
-
-import java.util.stream.Stream;
 
 import static br.com.rsfot.domain.Direction.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class AgentTest {
     private Agent agent;

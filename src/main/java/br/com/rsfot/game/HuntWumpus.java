@@ -73,7 +73,7 @@ public class HuntWumpus {
                 this.agentWinTheGame = true;
             }
         }
-    }
+     }
 
     private boolean canWalk() {
         switch (agent.getFacingDirection()) {
